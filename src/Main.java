@@ -46,7 +46,8 @@ public class Main {
 
     public static void datosDelJugador() throws Exception {
         String nombre = validarNombreDelJugador();
-        String apellidos= validarApellidosDelJugador();
+        String apellido1= validarApellido1DelJugador();
+        String apellido2= validarApellido2DelJugador();
         LocalDate fechaDeNacimiento= validarFechaDeNacimentoJugador();
         String nacionalidad= validarNacionalidadDelJugador();
         String nickname=validarNicknameDelJugador();
@@ -67,18 +68,31 @@ public class Main {
         return nombre;
     }
 
-    public static String validarApellidosDelJugador() throws Exception{
-        String apellidos;
+    public static String validarApellido1DelJugador() throws Exception{
+        String apellido;
         boolean i;
         do {
             i=true;
-            apellidos = JOptionPane.showInputDialog("Introduce los apelllidos del jugador:");
-            if(apellidos != null && !apellidos.isBlank() && apellidos.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+(\\s^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+)+$"))
+            apellido = JOptionPane.showInputDialog("Introduce el primer apellido del jugador:");
+            if(apellido != null && !apellido.isBlank() && apellido.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+(\\s^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+)+$"))
                 i=false;
             else
-                JOptionPane.showMessageDialog(null,"Los apellidos deben contener solo letras");
+                JOptionPane.showMessageDialog(null,"El apellido deben contener solo letras");
         }while(i);
-        return apellidos;
+        return apellido;
+    }
+    public static String validarApellido2DelJugador() throws Exception{
+        String apellido;
+        boolean i;
+        do {
+            i=true;
+            apellido = JOptionPane.showInputDialog("Introduce el segundo apellido del jugador:");
+            if(apellido != null && !apellido.isBlank() && apellido.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+(\\s^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+)+$"))
+                i=false;
+            else
+                JOptionPane.showMessageDialog(null,"El apellido deben contener solo letras");
+        }while(i);
+        return apellido;
     }
 
     public static LocalDate validarFechaDeNacimentoJugador()throws Exception{
