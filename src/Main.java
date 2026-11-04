@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class Main {
                         datosDelEquipo();
                         break;
                     case 3:
+                        i=3;
                         break;
                     default:
                         error = true;
@@ -31,6 +33,9 @@ public class Main {
             }catch (NumberFormatException e){
                 error=true;
                 JOptionPane.showMessageDialog(null,"Debes introducir un numero");
+            }catch (DateTimeParseException e){
+                error=true;
+                JOptionPane.showMessageDialog(null,"Introduce una fecha real");
             }catch (Exception e) {
                 error=true;
                 JOptionPane.showMessageDialog(null, "Error " + e.getMessage() + " " + e.getClass());
@@ -54,7 +59,7 @@ public class Main {
         do {
             i=true;
             nombre = JOptionPane.showInputDialog("Introduce el nombre del jugador:");
-            if(!nombre.isBlank() && nombre.matches("^[a-zA-Z]+$"))
+            if(nombre!= null && !nombre.isBlank() && nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+$"))
                 i=false;
             else
                 JOptionPane.showMessageDialog(null,"El nombre solo puede contener letras");
@@ -68,7 +73,7 @@ public class Main {
         do {
             i=true;
             apellidos = JOptionPane.showInputDialog("Introduce los apelllidos del jugador:");
-            if(!apellidos.isBlank() && apellidos.matches("^[a-zA-Z]+\s[a-zA-Z]+$"))
+            if(apellidos != null && !apellidos.isBlank() && apellidos.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+(\\s^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+)+$"))
                 i=false;
             else
                 JOptionPane.showMessageDialog(null,"Los apellidos deben contener solo letras");
@@ -80,15 +85,15 @@ public class Main {
         LocalDate fechaDeNacimineto = null;
         boolean i;
         String fechaTexto;
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         do {
             i=true;
             fechaTexto = JOptionPane.showInputDialog("Introduce la fecha de nacimiento en formato dia-mes-año:");
-            if(!fechaTexto.isBlank() && fechaTexto.matches("^[0-9]{2}-[0-9]{2}-[0-9]{4}$")) {
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            if(fechaTexto!=null && !fechaTexto.isBlank() && fechaTexto.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{4}$")&& LocalDate.parse(fechaTexto,formato).isBefore(LocalDate.now())) {
              fechaDeNacimineto= LocalDate.parse(fechaTexto,formato);
                 i = false;
             }  else
-                JOptionPane.showMessageDialog(null,"La fecha debe ser estrictamente en formato dia-mes-año");
+                JOptionPane.showMessageDialog(null,"Introduce una fecha valida en formato dia-mes-año");
         }while(i);
         return fechaDeNacimineto;
     }
@@ -99,7 +104,7 @@ public class Main {
         do {
             i=true;
             nacionalidad = JOptionPane.showInputDialog("Introduce la nacionalidad del jugador:");
-            if(!nacionalidad.isBlank() && nacionalidad.matches("^[a-zA-Z\s]+$"))
+            if(nacionalidad!=null && !nacionalidad.isBlank() && nacionalidad.matches("^[a-zA-Z\\s]+$"))
                 i=false;
             else
                 JOptionPane.showMessageDialog(null,"La nacionlaidad solo puede estar compuesta por letras");
@@ -113,7 +118,7 @@ public class Main {
         do {
             i=true;
             nickname = JOptionPane.showInputDialog("Introduce el nickname del jugador:");
-            if(!nickname.isBlank())
+            if(!nickname.isBlank() && nickname!=null)
                 i=false;
             else
                 JOptionPane.showMessageDialog(null,"Debes introducir un nickname para el jugador");
@@ -146,7 +151,7 @@ public class Main {
         do {
             i=true;
             nombre = JOptionPane.showInputDialog("Introduce el nombre del equipo:");
-            if(!nombre.isBlank() && nombre.matches("^[a-zA-Z\s]+$"))
+            if(nombre!=null && !nombre.isBlank() && nombre.matches("^[a-zA-Z\s]+$"))
                 i=false;
             else
                 JOptionPane.showMessageDialog(null,"El nombre del equipo solo debe contener letras");
@@ -161,7 +166,7 @@ public class Main {
         do {
             i=true;
             fechaTexto = JOptionPane.showInputDialog("Introduce la fecha de creacion en formato dia-mes-año:");
-            if(!fechaTexto.isBlank() && fechaTexto.matches("^[0-9]{2}-[0-9]{2}-[0-9]{4}$")) {
+            if(fechaTexto!=null && !fechaTexto.isBlank() && fechaTexto.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{4}$")) {
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 fecha= LocalDate.parse(fechaTexto,formato);
                 i = false;
