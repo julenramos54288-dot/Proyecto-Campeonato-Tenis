@@ -47,7 +47,8 @@ public class Main {
     }
     public static void solicitarDatosJugador(){
         String nombre = validarNombre();
-        String apellidos= validarApellidos();
+        String apellido1= validarApellido1();
+        String apellido2= validarApellido2();
        String nacionalidad= validarNacionalidad();
        LocalDate fechaNacimiento= validarFechaNacimiento();
        String nickname= validarNickname();
@@ -73,19 +74,39 @@ public class Main {
         }
         return nombre;
     }
-    public static String validarApellidos(){
+    public static String validarApellido1(){
         boolean valido= false;
         String apellidos="";
         String regex="^[A-Za-záÁéÉóÓíÍÜüñÑúÚ ]{3,}$";
         Pattern pat= Pattern.compile(regex);
         while (!valido){
-            apellidos= JOptionPane.showInputDialog(null,"Teclea los apellidos del jugador");
+            apellidos= JOptionPane.showInputDialog(null,"Teclea el primer del jugador");
             if (apellidos== null || apellidos.isBlank()){
-                JOptionPane.showMessageDialog(null,"No puedes dejar el campo en blanco");
+                JOptionPane.showMessageDialog(null,"No puedes dejar el apellido en blanco");
             }else {
                 Matcher mat= pat.matcher(apellidos);
                 if (!mat.matches()){
-                    JOptionPane.showMessageDialog(null,"Los apellidos no pueden contener números ni caracteres especiales");
+                    JOptionPane.showMessageDialog(null,"el apellido no puede contener números ni caracteres especiales");
+                }else {
+                    valido=true;
+                }
+            }
+        }
+        return apellidos;
+    }
+    public static String validarApellido2(){
+        boolean valido= false;
+        String apellidos="";
+        String regex="^[A-Za-záÁéÉóÓíÍÜüñÑúÚ ]{3,}$";
+        Pattern pat= Pattern.compile(regex);
+        while (!valido){
+            apellidos= JOptionPane.showInputDialog(null,"Teclea el segundo apellido del jugador");
+            if (apellidos== null || apellidos.isBlank()){
+                JOptionPane.showMessageDialog(null,"No puedes dejar el apellido en blanco");
+            }else {
+                Matcher mat= pat.matcher(apellidos);
+                if (!mat.matches()){
+                    JOptionPane.showMessageDialog(null,"el apellido no puede contener números ni caracteres especiales");
                 }else {
                     valido=true;
                 }
