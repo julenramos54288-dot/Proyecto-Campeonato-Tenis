@@ -131,7 +131,7 @@ public class Main {
         String Rol = "";
         try {
             Rol = JOptionPane.showInputDialog(null, " --INGRESE EL ROL DEL JUGADOR-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-Z0-9]+");
+            Pattern Par1 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9_ -]+");
             Matcher mat1 = Par1.matcher(Rol);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras y núemros ");
