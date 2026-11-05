@@ -35,7 +35,7 @@ public class Main {
         String nombre = "";
         try {
             nombre = JOptionPane.showInputDialog(null, " --INGRESE EL NOMBRE DEL JUGADOR-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-Z]+");
+            Pattern Par1 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+");
             Matcher mat1 = Par1.matcher(nombre);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras ");
@@ -50,7 +50,7 @@ public class Main {
         String apellido1 ="";
         try {
             apellido1 = JOptionPane.showInputDialog(null, " --INGRESE EL APELLIDO 1 DEL JUGADOR-- ");
-            Pattern Par2 = Pattern.compile("[a-zA-Z]+");
+            Pattern Par2 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+");
             Matcher mat2 = Par2.matcher(apellido1);
             if (!mat2.matches()) {
                 throw new Exception(" solo se admiten letras ");
@@ -66,7 +66,7 @@ public class Main {
         String apellido2 ="";
         try {
             apellido2 = JOptionPane.showInputDialog(null, " --INGRESE EL APELLIDO 2 DEL JUGADOR-- ");
-            Pattern Par2 = Pattern.compile("[a-zA-Z]+");
+            Pattern Par2 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+");
             Matcher mat2 = Par2.matcher(apellido2);
             if (!mat2.matches()) {
                 throw new Exception(" solo se admiten letras ");
@@ -82,7 +82,7 @@ public class Main {
         String nacionalidad ="";
         try {
             nacionalidad = JOptionPane.showInputDialog(null, " --INGRESE LA NACIONALIDAD DEL JUGADOR-- ");
-            Pattern Par3 = Pattern.compile("[a-zA-Z]+");
+            Pattern Par3 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+");
             Matcher mat3 = Par3.matcher(nacionalidad);
             if (!mat3.matches()) {
                 throw new Exception(" solo se admiten letras ");
@@ -94,21 +94,29 @@ public class Main {
         return nacionalidad;
     }
     public static LocalDate FechaJugador (){
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaNacimiento = JOptionPane.showInputDialog(null, " --INGRESE LA FECHA DE NACIMIENTO 'dia/mes/año'-- ");
-        LocalDate FechaNacido = LocalDate.parse(fechaNacimiento, formato);
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaNacimiento = JOptionPane.showInputDialog(null, " --INGRESE LA FECHA DE NACIMIENTO 'dia/mes/año'-- ");
+
             Pattern Par4 = Pattern.compile("(0[1-9]|[12][0-9]|3[0-1])/(0[1-9]|1[0-2])/([0-9]{4})$");
             Matcher mat4 = Par4.matcher(fechaNacimiento);
             if (!mat4.matches()) {
-                JOptionPane.showMessageDialog(null," --FORMATO DE FECHA INVALIDO-- ");
+                JOptionPane.showMessageDialog(null, " --FORMATO DE FECHA INVALIDO-- ");
+            } else {
+                LocalDate FechaNacido = LocalDate.parse(fechaNacimiento, formato);
+                return FechaNacido;
             }
-        return FechaNacido;
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+
+        return null;
     }
     public static String Nickname (){
         String nickname = "";
         try {
             nickname = JOptionPane.showInputDialog(null, " --INGRESE EL NICKNAME DEL JUGADOR-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-Z0-9_ -]+");
+            Pattern Par1 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9_ -]+");
             Matcher mat1 = Par1.matcher(nickname);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras y núemros ");
@@ -145,7 +153,7 @@ public class Main {
                 throw new IllegalArgumentException(" ingrese solo numeros");
             }
             Sueldo = Integer.parseInt(sueldo);
-            if (Sueldo < 1221){
+            if (Sueldo <= 1221){
                 throw new IllegalArgumentException(" el sueldo del jugador debe ser mayor a 1.221 euros");
             }
             return Sueldo;
@@ -161,7 +169,7 @@ public class Main {
         String NombreEquipo = "";
         try {
             NombreEquipo = JOptionPane.showInputDialog(null, " --INGRESE EL NOMBRE DEL EQUIPO-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-Z0-9_ -]+");
+            Pattern Par1 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9_ -]+");
             Matcher mat1 = Par1.matcher(NombreEquipo);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras ");
@@ -173,15 +181,24 @@ public class Main {
         return NombreEquipo;
     }
     public static LocalDate FechaEquipo(){
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaEquipo = JOptionPane.showInputDialog(null, " --INGRESE LA FECHA DE FUNDACION DEL EQUIPO ASI 'dia/mes/año'-- ");
-        LocalDate FechaFundacion = LocalDate.parse(fechaEquipo, formato);
-        Pattern Par4 = Pattern.compile("(0[1-9]|[12][0-9]|3[0-1])/(0[1-9]|1[0-2])/([0-9]{4})$");
-        Matcher mat4 = Par4.matcher(fechaEquipo);
-        if (!mat4.matches()) {
-            JOptionPane.showMessageDialog(null," --FORMATO DE FECHA INVALIDO-- ");
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaEquipo = JOptionPane.showInputDialog(null, " --INGRESE LA FECHA DE FUNDACION DEL EQUIPO ASI 'dia/mes/año'-- ");
+
+            Pattern Par4 = Pattern.compile("(0[1-9]|[12][0-9]|3[0-1])/(0[1-9]|1[0-2])/([0-9]{4})$");
+            Matcher mat4 = Par4.matcher(fechaEquipo);
+            if (!mat4.matches()) {
+                throw new Exception(" --FORMATO DE FECHA INVALIDO-- ");
+            } else {
+                LocalDate FechaFundacion = LocalDate.parse(fechaEquipo, formato);
+                return FechaFundacion;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
         }
-        return FechaFundacion;
+
+        return null;
     }
 
 
