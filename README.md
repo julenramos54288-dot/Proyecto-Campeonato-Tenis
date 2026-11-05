@@ -18,12 +18,13 @@ La aplicación contará con dos tipos de usuarios:
 - Modificar y eliminar registros.
 - Facilitar la gestión de los datos.
 
-## **💻 Tecnologías utilizadas:**
+## **💻 Programas utilizados:**
 - Java
 - IntelliJ IDEA
 - Git-Hub
 - GIT
 - Visual Paradigm
+- Draw.io
 
 
 ## **👥 Autores:**
