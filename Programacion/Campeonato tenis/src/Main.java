@@ -6,10 +6,15 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        DatosJugador();
+        DatosEquipo();
 
 
         
+    }
+    public static void DatosEquipo(){
+        NombreEquipo();
+        FechaEquipo();
+        DatosJugador();
     }
 
     public static void DatosJugador() {
@@ -23,6 +28,7 @@ public class Main {
         Rol();
         Sueldo();
     }
+
 
 
     public static String NombreJugador (){
@@ -144,6 +150,32 @@ public class Main {
         }
 
         return Sueldo = Integer.parseInt(sueldo);
+    }
+    public static String NombreEquipo (){
+        String NombreEquipo = "";
+        try {
+            NombreEquipo = JOptionPane.showInputDialog(null, " --INGRESE EL NOMBRE DEL EQUIPO-- ");
+            Pattern Par1 = Pattern.compile("[a-zA-Z]+[0-9]");
+            Matcher mat1 = Par1.matcher(NombreEquipo);
+            if (!mat1.matches()) {
+                throw new Exception(" solo se admiten letras ");
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,"ha ocurrido algo mal al ingresar los datos. " + e.getMessage());
+
+        }
+        return NombreEquipo;
+    }
+    public static LocalDate FechaEquipo(){
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaEquipo = JOptionPane.showInputDialog(null, " --INGRESE LA FECHA DE FUNDACION DEL EQUIPO ASI 'dia/mes/año'-- ");
+        LocalDate FechaFundacion = LocalDate.parse(fechaEquipo, formato);
+        Pattern Par4 = Pattern.compile("(0[1-9]|[12][0-9]|3[0-1])/(0[1-9]|1[0-2])/([0-9]{4})$");
+        Matcher mat4 = Par4.matcher(fechaEquipo);
+        if (!mat4.matches()) {
+            JOptionPane.showMessageDialog(null," --FORMATO DE FECHA INVALIDO-- ");
+        }
+        return FechaFundacion;
     }
 
 
