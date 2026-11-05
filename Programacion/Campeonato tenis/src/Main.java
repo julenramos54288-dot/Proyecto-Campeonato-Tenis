@@ -169,7 +169,7 @@ public class Main {
         String NombreEquipo = "";
         try {
             NombreEquipo = JOptionPane.showInputDialog(null, " --INGRESE EL NOMBRE DEL EQUIPO-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9_ -]+");
+            Pattern Par1 = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9 ]+");
             Matcher mat1 = Par1.matcher(NombreEquipo);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras ");
