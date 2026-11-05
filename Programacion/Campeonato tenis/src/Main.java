@@ -30,7 +30,7 @@ public class Main {
     }
 
 
-
+    // funciones de jugador
     public static String NombreJugador (){
         String nombre = "";
         try {
@@ -108,7 +108,7 @@ public class Main {
         String nickname = "";
         try {
             nickname = JOptionPane.showInputDialog(null, " --INGRESE EL NICKNAME DEL JUGADOR-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-Z0-9]+");
+            Pattern Par1 = Pattern.compile("[a-zA-Z0-9_ -]+");
             Matcher mat1 = Par1.matcher(nickname);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras y núemros ");
@@ -134,28 +134,34 @@ public class Main {
         }
         return Rol;
     }
-    public static float Sueldo (){
+    public static int Sueldo (){
         String sueldo = "";
-        float Sueldo;
+        int Sueldo;
         try{
             sueldo = JOptionPane.showInputDialog(null," --INGRESE EL SUELDO DEL JUGADOR--");
-            Pattern Par1 = Pattern.compile("[1-9]{1,3}\\.[1-9]{3}");
+            Pattern Par1 = Pattern.compile("[0-9]+");
             Matcher mat1 = Par1.matcher(sueldo);
             if (!mat1.matches()){
                 throw new IllegalArgumentException(" ingrese solo numeros");
             }
+            Sueldo = Integer.parseInt(sueldo);
+            if (Sueldo < 1221){
+                throw new IllegalArgumentException(" el sueldo del jugador debe ser mayor a 1.221 euros");
+            }
+            return Sueldo;
 
         } catch (IllegalArgumentException e){
             JOptionPane.showMessageDialog(null,"ha ocurrido algo mal al ingresar los datos. " + e.getMessage());
         }
 
-        return Sueldo = Integer.parseInt(sueldo);
+        return 0;
     }
+    // funciones de equipo
     public static String NombreEquipo (){
         String NombreEquipo = "";
         try {
             NombreEquipo = JOptionPane.showInputDialog(null, " --INGRESE EL NOMBRE DEL EQUIPO-- ");
-            Pattern Par1 = Pattern.compile("[a-zA-Z]+[0-9]");
+            Pattern Par1 = Pattern.compile("[a-zA-Z0-9_ -]+");
             Matcher mat1 = Par1.matcher(NombreEquipo);
             if (!mat1.matches()) {
                 throw new Exception(" solo se admiten letras ");
