@@ -1,11 +1,10 @@
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-void main(String[] args) {
+void main(String[] args)    {
     String nombre, naciomalidad, edad , alturast , peso , apellido1 , apellido2 , nombreEquipo, fecha, elegir;
     boolean continuar;
     Pattern patnm = Pattern.compile("^[A-Z][a-z]+([A-Z][a-z])*$");
@@ -13,8 +12,6 @@ void main(String[] args) {
     do {
         continuar=true;
         try {
-
-
     elegir = JOptionPane.showInputDialog(null, "Que quieres hacer? \n a) Registrar jugador. \n b) Registrar equipo. \n c) Salir.");
     switch (elegir) {
         case "a":
@@ -56,7 +53,7 @@ void main(String[] args) {
 public static String preguntarNombreEquipo() {
     boolean continuar;
     String nombre = "";
-    Pattern pat = Pattern.compile("^[A-Z]+[a-z]*$");
+    Pattern pat = Pattern.compile("^[A-Z]+[a-z0-9ñÑ ,áéíóúÁÉÍÓÚÜü]*");
     do {
         try {
             continuar = true;
@@ -80,15 +77,14 @@ public static String preguntarFecha() {
     do {
         try {
             continuar = true;
-            fecha = String.format(fecha, format);
             fecha = JOptionPane.showInputDialog(null, "Cual es la fecha de creación del equipo? \n (usa el siguiente formato: dd/MM/yyyy");
+            fecha = String.format(fecha, format);
             LocalDate.parse(fecha, format);
-        } catch (NullPointerException | DateTimeParseException e) {
+        } catch (Exception e) {
             continuar = false;
             JOptionPane.showMessageDialog(null, "Datos invalidos, por favor rellenalos correctamente");
         }
-    } while (!
-            continuar);
+    } while (!continuar);
     return fecha;
 }
 public static String preguntarNombre(Pattern patnm) {
