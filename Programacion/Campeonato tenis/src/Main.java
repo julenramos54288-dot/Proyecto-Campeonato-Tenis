@@ -6,10 +6,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 void main(String[] args) {
-    String nombre, naciomalidad, edad , alturast , peso , apellido1 , apellido2 , nombreEquipo, fecha, elegir = JOptionPane.showInputDialog(null, "Que quieres hacer? \n a) Registrar jugador. \n b) Registrar equipo. \n c) Salir.");
+    String nombre, naciomalidad, edad , alturast , peso , apellido1 , apellido2 , nombreEquipo, fecha, elegir;
     boolean continuar;
     Pattern patnm = Pattern.compile("^[A-Z][a-z]+([A-Z][a-z])*$");
-    Pattern patnum = Pattern.compile("[0-9]");
+    Pattern patnum = Pattern.compile("[0-9]+([0-9])*$");
+    do {
+        continuar=true;
+        try {
+
+
+    elegir = JOptionPane.showInputDialog(null, "Que quieres hacer? \n a) Registrar jugador. \n b) Registrar equipo. \n c) Salir.");
     switch (elegir) {
         case "a":
             do {
@@ -39,7 +45,13 @@ void main(String[] args) {
             break;
         default:
             JOptionPane.showMessageDialog(null, "Selecciona una opción valida");
+            continuar = false;
     }
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Opción no valida, por favor selecciona una de las tres opciones");
+            continuar = false;
+        }
+    } while (!continuar);
 }
 public static String preguntarNombreEquipo() {
     boolean continuar;
@@ -66,8 +78,8 @@ public static String preguntarFecha() {
     boolean continuar;
     DateTimeFormatter format= DateTimeFormatter.ofPattern("dd/MM/yyyy");
     do {
-        continuar = true;
         try {
+            continuar = true;
             fecha = String.format(fecha, format);
             fecha = JOptionPane.showInputDialog(null, "Cual es la fecha de creación del equipo? \n (usa el siguiente formato: dd/MM/yyyy");
             LocalDate.parse(fecha, format);
@@ -75,7 +87,8 @@ public static String preguntarFecha() {
             continuar = false;
             JOptionPane.showMessageDialog(null, "Datos invalidos, por favor rellenalos correctamente");
         }
-    } while (!continuar);
+    } while (!
+            continuar);
     return fecha;
 }
 public static String preguntarNombre(Pattern patnm) {
