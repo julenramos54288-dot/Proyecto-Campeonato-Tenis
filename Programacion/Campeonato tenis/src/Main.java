@@ -6,15 +6,55 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        DatosEquipo();
-
-
-        
+        try {
+            char opcion;
+            do {
+                opcion = MostrarMenu();
+                switch (opcion){
+                    case 'a'->{
+                        NombreEquipo();
+                        break;
+                    }
+                    case 'b'->{
+                        FechaEquipo();
+                        break;
+                    }
+                    case 'c'->{
+                        DatosJugador();
+                        break;
+                    }
+                }
+            }while (opcion != 'd');
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null,"--ERRORES DESCONOCIDOS--"+ e.getMessage());
+        }
     }
-    public static void DatosEquipo(){
-        NombreEquipo();
-        FechaEquipo();
-        DatosJugador();
+    public static char MostrarMenu(){
+        char opcion=' ';
+        boolean error;
+        do {
+            try {
+                String respuesta = JOptionPane.showInputDialog("--ELIGE UNA OPCIÓN--\n" + "--(A) NOMBRE DEL EQUIPO--\n" + "--(B) FECHA DE CREACION DEL EQUIPO--\n" + "--(C) DATOS DEL JUGADOR--\n" + "--(D) SALIR--\n");
+                if (respuesta.length()>1){
+                    throw new Exception("--HAY QUE ELEGIR ALGUNA DE LAS OPCIONES--");
+                }
+                opcion = respuesta.toLowerCase().charAt(0);
+                if (opcion != 'a' && opcion != 'b' && opcion != 'c' && opcion != 'd'){
+                    throw new Exception("--LA OPCION ELEGIDA NO ES CORRECTA--");
+                }
+                error = false;
+            }catch (IndexOutOfBoundsException e){
+                error=true;
+                JOptionPane.showMessageDialog(null,"--HAY QUE INDICAR UNA OPCIÓN--");
+            }catch (NullPointerException e){
+                error = true;
+                JOptionPane.showMessageDialog(null,"--PARA SALIR PRESIONE 'D'--");
+            }catch (Exception e){
+                error = true;
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        } while (error);
+        return opcion;
     }
 
     public static void DatosJugador() {
