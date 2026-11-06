@@ -1,4 +1,4 @@
-# **🎾 PROYECTO CAMPEONATO TENIS** 
+# **PROYECTO CAMPEONATO TENIS** 
 
 ## **Descripción:**
 
@@ -11,14 +11,14 @@ La aplicación contará con dos tipos de usuarios:
 
 - **Usuario:**  podrá consultar informes sobre los equipos participantes, los resultados de la última jornada y realizar predicciones mediante inteligencia artificial (IA).
 
-## **🎯 Objetivos:**
+## **Objetivos:**
 
 - Registrar nuevos jugadores.
 - Consultar información de los jugadores.
 - Modificar y eliminar registros.
 - Facilitar la gestión de los datos.
 
-## **💻 Programas utilizados:**
+## **Programas utilizados:**
 - Java
 - IntelliJ IDEA
 - Git-Hub
@@ -27,7 +27,7 @@ La aplicación contará con dos tipos de usuarios:
 - Draw.io
 
 
-## **👥 Autores:**
+## **Autores:**
 - Julen ramos
 - Omar Rahmouni
 - Fernando Mendoza
