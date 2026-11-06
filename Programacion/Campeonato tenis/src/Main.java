@@ -5,50 +5,62 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 void main(String[] args)    {
-    String nombre, naciomalidad, edad , alturast , peso , apellido1 , apellido2 , nombreEquipo, fecha, elegir;
-    boolean continuar;
-    Pattern patnm = Pattern.compile("^[A-Z][a-z]+([A-Z][a-z])*$");
+    Pattern patnm = Pattern.compile("^[A-Z][a-z]+([A-Za-z ñÑáéíóúÁÉÍÓÚüÜ])*$");
     Pattern patnum = Pattern.compile("[0-9]+([0-9])*$");
+    String mostrar = mostrarMenu(patnm,patnum);
+    JOptionPane.showMessageDialog(null, mostrar);
+}
+public static String mostrarMenu (Pattern patnm, Pattern patnum) {
+    String elegir;
+    boolean continuar;
     do {
         continuar=true;
         try {
-    elegir = JOptionPane.showInputDialog(null, "Que quieres hacer? \n a) Registrar jugador. \n b) Registrar equipo. \n c) Salir.");
-    switch (elegir) {
-        case "a":
-            do {
-                continuar = true;
-                try {
-                    nombre = preguntarNombre(patnm);
-                    apellido1 = preguntarApellido1(patnm);
-                    apellido2 = preguntarApellido2(patnm);
-                    naciomalidad = preguntarNacionalidad(patnm);
-                    edad = preguntarEdad(patnum);
-                    alturast = preguntarAltura(patnum);
-                    peso = preguntarPeso(patnum);
-                    JOptionPane.showMessageDialog(null, "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg.");
-                } catch (NullPointerException e) {
-                    JOptionPane.showMessageDialog(null, "Algo salio mal, por favor intentelo de nuevo.");
+            elegir = JOptionPane.showInputDialog(null, "Que quieres hacer? \n a) Registrar jugador. \n b) Registrar equipo. \n c) Salir.");
+            switch (elegir) {
+                case "a":
+                    return registrarJugador(patnm,patnum);
+                case "b":
+                    return registrarEquipo();
+                case "c":
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Selecciona una opción valida");
                     continuar = false;
-                }
-            } while (!continuar);
-            break;
-        case "b":
-            nombreEquipo = preguntarNombreEquipo();
-            fecha = preguntarFecha();
-            JOptionPane.showMessageDialog(null ,"Has registrado al equipo " + nombreEquipo + " creado en " + fecha);
-            break;
-        case "c":
-            JOptionPane.showMessageDialog(null, "Ádios");
-            break;
-        default:
-            JOptionPane.showMessageDialog(null, "Selecciona una opción valida");
-            continuar = false;
-    }
+            }
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Opción no valida, por favor selecciona una de las tres opciones");
             continuar = false;
         }
     } while (!continuar);
+    return "Ádios";
+}
+public static String registrarEquipo() {
+    String nombreEquipo, fecha;
+    nombreEquipo = preguntarNombreEquipo();
+    fecha = preguntarFecha();
+    return "Has registrado al equipo " + nombreEquipo + " creado en " + fecha;
+}
+public static String registrarJugador(Pattern patnm , Pattern patnum) {
+    String nombre, apellido1, apellido2, naciomalidad, edad, alturast , peso, texto="";
+    boolean continuar;
+    do {
+        continuar = true;
+        try {
+            nombre = preguntarNombre(patnm);
+            apellido1 = preguntarApellido1(patnm);
+            apellido2 = preguntarApellido2(patnm);
+            naciomalidad = preguntarNacionalidad(patnm);
+            edad = preguntarEdad(patnum);
+            alturast = preguntarAltura(patnum);
+            peso = preguntarPeso(patnum);
+            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg.";
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Algo salio mal, por favor intentelo de nuevo.");
+            continuar = false;
+        }
+    } while (!continuar);
+    return texto;
 }
 public static String preguntarNombreEquipo() {
     boolean continuar;
