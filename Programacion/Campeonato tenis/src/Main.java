@@ -39,10 +39,10 @@ public static String registrarEquipo() {
     String nombreEquipo, fecha;
     nombreEquipo = preguntarNombreEquipo();
     fecha = preguntarFecha();
-    return "Has registrado al equipo " + nombreEquipo + " creado en " + fecha;
+    return STR."Has registrado al equipo \{nombreEquipo} creado en \{fecha}";
 }
 public static String registrarJugador(Pattern patnm , Pattern patnum) {
-    String nombre, apellido1, apellido2, naciomalidad, edad, alturast , peso, texto="";
+    String nombre, apellido1, apellido2, naciomalidad, edad, alturast , peso, sueldo, texto="";
     boolean continuar;
     do {
         continuar = true;
@@ -54,7 +54,8 @@ public static String registrarJugador(Pattern patnm , Pattern patnum) {
             edad = preguntarEdad(patnum);
             alturast = preguntarAltura(patnum);
             peso = preguntarPeso(patnum);
-            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg.";
+            sueldo = preguntarSueldo(patnum);
+            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg. \n - Tu sueldo es de " + sueldo;
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Algo salio mal, por favor intentelo de nuevo.");
             continuar = false;
@@ -196,4 +197,24 @@ public static String preguntarPeso (Pattern patnum) {
         }
     } while (!continuar);
     return peso;
+}
+public static String preguntarSueldo(Pattern patnum) {
+    String sueldo = "";
+    boolean continuar;
+    do {
+        continuar = true;
+        try {
+            sueldo = JOptionPane.showInputDialog("Cual es el sueldo del jugador");
+            Matcher mat = patnum.matcher(sueldo);
+            int sueldoint = Integer.parseInt(sueldo);
+            if (mat.matches() || sueldoint<1221) {
+                continuar = false;
+                JOptionPane.showMessageDialog(null, "El sueldo debe ser mayor que 1221€ y solo contener numeros");
+            }
+        }catch (Exception e) {
+            continuar = false;
+            JOptionPane.showMessageDialog(null, "El sueldo debe ser mayor que 1221€ y solo contener numeros");
+        }
+    } while (!continuar);
+    return sueldo;
 }
