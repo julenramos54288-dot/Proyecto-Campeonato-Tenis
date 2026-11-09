@@ -25,7 +25,7 @@ public class Main {
                     case 3:
                         break;
                     default:
-                        throw new Exception("Debes escojer la opcion 1, 2 o 3");
+                        throw new Exception("Debes escoger la opcion 1, 2 o 3");
 
                 }
 
@@ -211,58 +211,70 @@ do {
 return rol;
     }
 
-    public static void confirmacionRegistroJugador(String nombre, String apellido1, String apellido2, LocalDate fechaDeNacimiento, String nacionalidad, String rol, String nickname, int sueldo) throws Exception {
+    public static void confirmacionRegistroJugador(String nombre, String apellido1, String apellido2, LocalDate fechaDeNacimiento, String nacionalidad, String rol, String nickname, int sueldo)  {
         boolean error;
         int i;
-        do {
+        do{
+            error=false;
+        try {
+            do {
+                i = JOptionPane.showConfirmDialog(null, "Son todos los datos correctos?\n" +
+                        "Nombre: " + nombre + "\n" +
+                        "Apellidos: " + apellido1 + " " + apellido2 + "\n" +
+                        "Fecha de nacimienato: " + fechaDeNacimiento + "\n" +
+                        "Nacionalidad: " + nacionalidad + "\n" +
+                        "Rol: " + rol + "\n" +
+                        "Nickname: " + nickname + "\n" +
+                        "Sueldo: " + sueldo + "\n", null, JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    JOptionPane.showMessageDialog(null, "Jugador registrado correctamente.");
+                } else {
 
-          i = JOptionPane.showConfirmDialog(null, "Son todos los datos correctos?\n" +
-                    "Nombre: " + nombre + "\n" +
-                    "Apellidos: " + apellido1 + " " + apellido2 + "\n" +
-                    "Fecha de nacimienato: " + fechaDeNacimiento + "\n" +
-                    "Nacionalidad: " + nacionalidad + "\n" +
-                    "Rol: " + rol + "\n" +
-                    "Nickname: " + nickname + "\n" +
-                    "Sueldo: " + sueldo + "\n", null, JOptionPane.YES_NO_OPTION);
-            if (i == 0) {
-                JOptionPane.showMessageDialog(null, "Jugador registrado correctamente.");
-            } else {
-
-                do {
-                    error = false;
-                    int opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Que dato esta mal: \n" +
-                            "1.- Nombre\n" +
-                            "2.- Apellido 1\n" +
-                            "3.- Apellido 2\n" +
-                            "4.- Fecha de nacimineto\n" +
-                            "5.- Rol\n" +
-                            "6.- Nickname\n" +
-                            "7.- Sueldo\n"));
-                    switch (opcion) {
-                        case 1 -> nombre = validarNombreDelJugador();
-                        case 2 -> apellido1 = validarApellido1DelJugador();
-                        case 3 -> apellido2 = validarApellido2DelJugador();
-                        case 4 -> fechaDeNacimiento = validarFechaDeNacimentoJugador();
-                        case 5 -> rol = pedirRol();
-                        case 6 -> nickname = validarNicknameDelJugador();
-                        case 7 -> sueldo = validarSueldoDelJugador();
-                        default -> {
-                            JOptionPane.showMessageDialog(null, "Introduce un numero entre el 1 y el 7 ");
-                            error = true;
+                    do {
+                        error = false;
+                        int opcion;
+                        opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Que dato esta mal: \n" +
+                                "1.- Nombre\n" +
+                                "2.- Apellido 1\n" +
+                                "3.- Apellido 2\n" +
+                                "4.- Fecha de nacimineto\n" +
+                                "5.- Rol\n" +
+                                "6.- Nickname\n" +
+                                "7.- Sueldo\n"));
+                        switch (opcion) {
+                            case 1 -> nombre = validarNombreDelJugador();
+                            case 2 -> apellido1 = validarApellido1DelJugador();
+                            case 3 -> apellido2 = validarApellido2DelJugador();
+                            case 4 -> fechaDeNacimiento = validarFechaDeNacimentoJugador();
+                            case 5 -> rol = pedirRol();
+                            case 6 -> nickname = validarNicknameDelJugador();
+                            case 7 -> sueldo = validarSueldoDelJugador();
+                            default -> {
+                                JOptionPane.showMessageDialog(null, "Introduce un numero entre el 1 y el 7 ");
+                                error = true;
+                            }
                         }
-                    }
-                } while (error);
+                    } while (error);
 
-            }
-        }while(i==1);
+                }
+            } while (i == 1);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null,"Debes escoger una opcion");
+            error=true;
+        } catch (Exception e) {
 
+            throw new RuntimeException(e);
+        }
+        }while(error);
     }
 
     public static void confirmacionRegistroEquipo(String nombreEquipo, LocalDate fechaFundacion) throws Exception{
         boolean error;
         int i;
         do{
-
+            error=true;
+        try{
+        do{
             i=JOptionPane.showConfirmDialog(null, "Son todos los datos correctos?\n" +
                     "Nombre: " + nombreEquipo + "\n" +
                     "Fecha de funadación: " +fechaFundacion + "\n",null,
@@ -281,12 +293,19 @@ return rol;
                         case 1 -> nombreEquipo = validarNombreDelEquipo();
                         case 2 -> fechaFundacion = validarFechaDeFundacion();
                         default -> {
-                            JOptionPane.showMessageDialog(null, "Debes escojer una de las dos opciones");
+                            JOptionPane.showMessageDialog(null, "Debes escoger una de las dos opciones");
                             error = true;
                         }
                     }
                 }while(error);
             }
         }while(i==1);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null,"Debes escoger una opcion");
+            error=true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        }while(error);
     }
 }
