@@ -8,10 +8,11 @@ import java.util.regex.Pattern;
 void main(String[] args)    {
     Pattern patnm = Pattern.compile("^[A-Z][a-z]+([A-Za-z ñÑáéíóúÁÉÍÓÚüÜ])*$");
     Pattern patnum = Pattern.compile("[0-9]+([0-9])*$");
-    String mostrar = mostrarMenu(patnm,patnum);
+    Pattern patdos = Pattern.compile("^[a-z][A-Z][0-9]+([a-zA-Z0-9\\sñÑáéíóúÁÉÍÓÚüÜ])*$");
+    String mostrar = mostrarMenu(patnm,patnum,patdos);
     JOptionPane.showMessageDialog(null, mostrar);
 }
-public static String mostrarMenu (Pattern patnm, Pattern patnum) {
+public static String mostrarMenu (Pattern patnm, Pattern patnum,Pattern patdos) {
     String elegir;
     boolean continuar;
     do {
@@ -20,7 +21,7 @@ public static String mostrarMenu (Pattern patnm, Pattern patnum) {
             elegir = JOptionPane.showInputDialog(null, "Que quieres hacer? \n a) Registrar jugador. \n b) Registrar equipo. \n c) Salir.");
             switch (elegir) {
                 case "a":
-                    return registrarJugador(patnm,patnum);
+                    return registrarJugador(patnm,patnum,patdos);
                 case "b":
                     return registrarEquipo();
                 case "c":
@@ -42,8 +43,8 @@ public static String registrarEquipo() {
     fecha = preguntarFecha();
     return STR."Es correcta la información del equipo \{nombreEquipo} creado en \{fecha}?";
 }
-public static String registrarJugador(Pattern patnm , Pattern patnum) {
-    String nombre , apellido1 , apellido2 , naciomalidad , edad , alturast , peso , nickname , sueldo, texto="";
+public static String registrarJugador(Pattern patnm , Pattern patnum, Pattern patdos) {
+    String nombre , apellido1 , apellido2 , naciomalidad , edad , alturast , peso , nickname , rol , sueldo, texto="";
     boolean continuar;
     do {
         continuar = true;
@@ -55,9 +56,10 @@ public static String registrarJugador(Pattern patnm , Pattern patnum) {
             edad = preguntarEdad(patnum);
             alturast = preguntarAltura(patnum);
             peso = preguntarPeso(patnum);
-            nickname = preguntarNickname(patnm);
+            nickname = preguntarNickname(patdos);
+            rol = preguntarRol(patdos);
             sueldo = preguntarSueldo(patnum);
-            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg. \n - Tu nickname es " + nickname + " \n - Tu sueldo es de " + sueldo;
+            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg. \n - Tu nickname es " + nickname + "\n - Tu rol es " + rol + " \n - Tu sueldo es de " + sueldo;
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Algo salio mal, por favor intentelo de nuevo.");
             continuar = false;
@@ -205,14 +207,14 @@ public static String preguntarPeso (Pattern patnum) {
     } while (!continuar);
     return peso;
 }
-public static String preguntarNickname (Pattern patnm) {
+public static String preguntarNickname (Pattern patdos) {
     String nickname = "";
     boolean continuar;
     do {
         continuar = true;
         try {
             nickname = JOptionPane.showInputDialog(null, "Cual es el nickname del jugador");
-            Matcher mat = patnm.matcher(nickname);
+            Matcher mat = patdos.matcher(nickname);
             if (mat.matches()) {
                 continuar = false;
                 JOptionPane.showMessageDialog(null, "El nombre no es valido");
@@ -223,6 +225,25 @@ public static String preguntarNickname (Pattern patnm) {
         }
     } while (!continuar);
     return nickname;
+}
+public static String preguntarRol (Pattern patdos) {
+    boolean continuar;
+    String rol="";
+    do {
+        continuar = true;
+        try {
+            rol = JOptionPane.showInputDialog(null, "Dime tu rol");
+            Matcher mat = patdos.matcher(rol);
+            if (!mat.matches()){
+                continuar = false;
+                JOptionPane.showMessageDialog(null,"Rol no valido");
+            }
+        } catch (Exception e) {
+            continuar = false;
+            JOptionPane.showMessageDialog(null, "Rellena la información");
+        }
+    } while (!continuar);
+    return rol;
 }
 public static String preguntarSueldo(Pattern patnum) {
     String sueldo = "";
