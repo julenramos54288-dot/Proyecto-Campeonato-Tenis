@@ -184,9 +184,10 @@ public class Main {
         String fechaTexto;
         do {
             i=true;
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             fechaTexto = JOptionPane.showInputDialog("Introduce la fecha de creacion en formato dia-mes-año:");
-            if(fechaTexto!=null && !fechaTexto.isBlank() && fechaTexto.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{4}$")) {
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            if(fechaTexto!=null && !fechaTexto.isBlank() && fechaTexto.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{4}$") && LocalDate.parse(fechaTexto,formato).isBefore(LocalDate.now())) {
+
                 fecha= LocalDate.parse(fechaTexto,formato);
                 i = false;
             }  else
@@ -240,7 +241,8 @@ return rol;
                                 "4.- Fecha de nacimineto\n" +
                                 "5.- Rol\n" +
                                 "6.- Nickname\n" +
-                                "7.- Sueldo\n"));
+                                "7.- Sueldo\n" +
+                                "8.- Nacionalidad"));
                         switch (opcion) {
                             case 1 -> nombre = validarNombreDelJugador();
                             case 2 -> apellido1 = validarApellido1DelJugador();
@@ -249,6 +251,7 @@ return rol;
                             case 5 -> rol = pedirRol();
                             case 6 -> nickname = validarNicknameDelJugador();
                             case 7 -> sueldo = validarSueldoDelJugador();
+                            case 8 -> nacionalidad=validarNacionalidadDelJugador();
                             default -> {
                                 JOptionPane.showMessageDialog(null, "Introduce un numero entre el 1 y el 7 ");
                                 error = true;
