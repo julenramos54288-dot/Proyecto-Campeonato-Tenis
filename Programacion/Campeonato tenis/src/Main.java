@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
@@ -39,10 +40,10 @@ public static String registrarEquipo() {
     String nombreEquipo, fecha;
     nombreEquipo = preguntarNombreEquipo();
     fecha = preguntarFecha();
-    return STR."Has registrado al equipo \{nombreEquipo} creado en \{fecha}";
+    return STR."Es correcta la información del equipo \{nombreEquipo} creado en \{fecha}?";
 }
 public static String registrarJugador(Pattern patnm , Pattern patnum) {
-    String nombre, apellido1, apellido2, naciomalidad, edad, alturast , peso, sueldo, texto="";
+    String nombre , apellido1 , apellido2 , naciomalidad , edad , alturast , peso , nickname , sueldo, texto="";
     boolean continuar;
     do {
         continuar = true;
@@ -54,8 +55,9 @@ public static String registrarJugador(Pattern patnm , Pattern patnum) {
             edad = preguntarEdad(patnum);
             alturast = preguntarAltura(patnum);
             peso = preguntarPeso(patnum);
+            nickname = preguntarNickname(patnm);
             sueldo = preguntarSueldo(patnum);
-            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg. \n - Tu sueldo es de " + sueldo;
+            texto = "Saludos " + nombre + " " + apellido1 + " " + apellido2 + " de " + naciomalidad + ". \n Por favor, dime si los siguiente datos son correctos: \n - Tienes " + edad + " años. \n - Tu altura es de " + alturast + "cm. \n - Tu peso es de " + peso + "kg. \n - Tu nickname es " + nickname + " \n - Tu sueldo es de " + sueldo;
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Algo salio mal, por favor intentelo de nuevo.");
             continuar = false;
@@ -66,7 +68,7 @@ public static String registrarJugador(Pattern patnm , Pattern patnum) {
 public static String preguntarNombreEquipo() {
     boolean continuar;
     String nombre = "";
-    Pattern pat = Pattern.compile("^[A-Z]+[a-z0-9ñÑ ,áéíóúÁÉÍÓÚÜü]*");
+    Pattern pat = Pattern.compile("^[A-Z]+[a-z0-9ñÑ\\s,áéíóúÁÉÍÓÚÜü]*");
     do {
         try {
             continuar = true;
@@ -84,21 +86,26 @@ public static String preguntarNombreEquipo() {
     return nombre;
 }
 public static String preguntarFecha() {
-    String fecha = "";
+    String fechast = "";
     boolean continuar;
     DateTimeFormatter format= DateTimeFormatter.ofPattern("dd/MM/yyyy");
     do {
         try {
             continuar = true;
-            fecha = JOptionPane.showInputDialog(null, "Cual es la fecha de creación del equipo? \n (usa el siguiente formato: dd/MM/yyyy");
-            fecha = String.format(fecha, format);
-            LocalDate.parse(fecha, format);
+            fechast = JOptionPane.showInputDialog(null, "Cual es la fecha de creación del equipo? \n (usa el siguiente formato: dd/MM/yyyy");
+            fechast = String.format(fechast, format);
+            LocalDate.parse(fechast, format);
+            LocalDate fecha = LocalDate.parse(fechast, format);
+            if (fecha.isAfter(LocalDate.now())) {
+                continuar = false;
+                JOptionPane.showMessageDialog(null, "La fecha no puede ser posterior a la actual");
+            }
         } catch (Exception e) {
             continuar = false;
             JOptionPane.showMessageDialog(null, "Datos invalidos, por favor rellenalos correctamente");
         }
     } while (!continuar);
-    return fecha;
+    return fechast;
 }
 public static String preguntarNombre(Pattern patnm) {
     String nombre;
@@ -198,6 +205,25 @@ public static String preguntarPeso (Pattern patnum) {
     } while (!continuar);
     return peso;
 }
+public static String preguntarNickname (Pattern patnm) {
+    String nickname = "";
+    boolean continuar;
+    do {
+        continuar = true;
+        try {
+            nickname = JOptionPane.showInputDialog(null, "Cual es el nickname del jugador");
+            Matcher mat = patnm.matcher(nickname);
+            if (mat.matches()) {
+                continuar = false;
+                JOptionPane.showMessageDialog(null, "El nombre no es valido");
+            }
+        } catch (Exception e) {
+            continuar = false;
+            JOptionPane.showMessageDialog(null, "Solo puede incluir letras y la primera mayúscula");
+        }
+    } while (!continuar);
+    return nickname;
+}
 public static String preguntarSueldo(Pattern patnum) {
     String sueldo = "";
     boolean continuar;
@@ -207,7 +233,7 @@ public static String preguntarSueldo(Pattern patnum) {
             sueldo = JOptionPane.showInputDialog("Cual es el sueldo del jugador");
             Matcher mat = patnum.matcher(sueldo);
             int sueldoint = Integer.parseInt(sueldo);
-            if (mat.matches() || sueldoint<1221) {
+            if (!mat.matches() || sueldoint<1221) {
                 continuar = false;
                 JOptionPane.showMessageDialog(null, "El sueldo debe ser mayor que 1221€ y solo contener numeros");
             }
